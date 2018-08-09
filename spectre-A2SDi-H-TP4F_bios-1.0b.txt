@@ -1,0 +1,71 @@
+Spectre and Meltdown mitigation detection tool v0.38
+
+Checking for vulnerabilities on current system
+Kernel is [35mLinux 4.17.0-1-amd64 #1 SMP Debian 4.17.8-1 (2018-07-20) x86_64[0m
+CPU is [35mIntel(R) Atom(TM) CPU C3958 @ 2.00GHz[0m
+
+[1;34mHardware check[0m
+* Hardware support (CPU microcode) for mitigation techniques
+  * Indirect Branch Restricted Speculation (IBRS)
+    * SPEC_CTRL MSR is available: [42m[30m YES [0m
+    * CPU indicates IBRS capability: [42m[30m YES [0m (SPEC_CTRL feature bit)
+  * Indirect Branch Prediction Barrier (IBPB)
+    * PRED_CMD MSR is available: [42m[30m YES [0m
+    * CPU indicates IBPB capability: [42m[30m YES [0m (SPEC_CTRL feature bit)
+  * Single Thread Indirect Branch Predictors (STIBP)
+    * SPEC_CTRL MSR is available: [42m[30m YES [0m
+    * CPU indicates STIBP capability: [42m[30m YES [0m (Intel STIBP feature bit)
+  * Speculative Store Bypass Disable (SSBD)
+    * CPU indicates SSBD capability: [43m[30m NO [0m
+  * Enhanced IBRS (IBRS_ALL)
+    * CPU indicates ARCH_CAPABILITIES MSR availability: [42m[30m YES [0m
+    * ARCH_CAPABILITIES MSR advertises IBRS_ALL capability: [43m[30m NO [0m
+  * CPU explicitly indicates not being vulnerable to Meltdown (RDCL_NO): [43m[30m NO [0m
+  * CPU explicitly indicates not being vulnerable to Variant 4 (SSB_NO): [43m[30m NO [0m
+  * CPU microcode is known to cause stability problems: [44m[30m NO [0m (model 0x5f family 0x6 stepping 0x1 ucode 0x20 cpuid 0x506f1)
+* CPU vulnerability to the speculative execution attack variants
+  * Vulnerable to Variant 1: [43m[30m YES [0m
+  * Vulnerable to Variant 2: [43m[30m YES [0m
+  * Vulnerable to Variant 3: [43m[30m YES [0m
+  * Vulnerable to Variant 3a: [43m[30m YES [0m
+  * Vulnerable to Variant 4: [43m[30m YES [0m
+
+[1;34mCVE-2017-5753 [bounds check bypass] aka 'Spectre Variant 1'[0m
+* Mitigated according to the /sys interface: [42m[30m YES [0m (Mitigation: __user pointer sanitization)
+* Kernel has array_index_mask_nospec: [42m[30m YES [0m (1 occurrence(s) found of x86 64 bits array_index_mask_nospec())
+* Kernel has the Red Hat/Ubuntu patch: [43m[30m NO [0m
+* Kernel has mask_nospec64 (arm64): [43m[30m NO [0m
+> [46m[30mSTATUS:[0m [42m[30m NOT VULNERABLE [0m (Mitigation: __user pointer sanitization)
+
+[1;34mCVE-2017-5715 [branch target injection] aka 'Spectre Variant 2'[0m
+* Mitigated according to the /sys interface: [42m[30m YES [0m (Mitigation: Full generic retpoline, IBPB, IBRS_FW)
+* Mitigation 1
+  * Kernel is compiled with IBRS support: [42m[30m YES [0m
+    * IBRS enabled and active: [42m[30m YES [0m (for kernel and firmware code)
+  * Kernel is compiled with IBPB support: [42m[30m YES [0m
+    * IBPB enabled and active: [42m[30m YES [0m
+* Mitigation 2
+  * Kernel has branch predictor hardening (arm): [43m[30m NO [0m
+  * Kernel compiled with retpoline option: [42m[30m YES [0m
+    * Kernel compiled with a retpoline-aware compiler: [42m[30m YES [0m (kernel reports full retpoline compilation)
+> [46m[30mSTATUS:[0m [42m[30m NOT VULNERABLE [0m (Full retpoline + IBPB are mitigating the vulnerability)
+
+[1;34mCVE-2017-5754 [rogue data cache load] aka 'Meltdown' aka 'Variant 3'[0m
+* Mitigated according to the /sys interface: [42m[30m YES [0m (Not affected)
+* Kernel supports Page Table Isolation (PTI): [42m[30m YES [0m
+  * PTI enabled and active: [43m[30m NO [0m
+  * Reduced performance impact of PTI: [44m[30m NO [0m (PCID/INVPCID not supported, performance impact of PTI will be significant)
+* Running as a Xen PV DomU: [44m[30m NO [0m
+> [46m[30mSTATUS:[0m [42m[30m NOT VULNERABLE [0m (Not affected)
+
+[1;34mCVE-2018-3640 [rogue system register read] aka 'Variant 3a'[0m
+* CPU microcode mitigates the vulnerability: [43m[30m NO [0m
+> [46m[30mSTATUS:[0m [41m[30m VULNERABLE [0m (an up-to-date CPU microcode is needed to mitigate this vulnerability)
+
+[1;34mCVE-2018-3639 [speculative store bypass] aka 'Variant 4'[0m
+* Mitigated according to the /sys interface: [43m[30m NO [0m (Vulnerable)
+* Kernel supports speculation store bypass: [42m[30m YES [0m (found in /proc/self/status)
+> [46m[30mSTATUS:[0m [41m[30m VULNERABLE [0m (Your CPU doesn't support SSBD)
+
+Need more detailed information about mitigation options? Use --explain
+A false sense of security is worse than no security at all, see --disclaimer
